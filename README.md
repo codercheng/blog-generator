@@ -7,5 +7,8 @@
 
 
 #截图
+__实时预览模式__
 ![nginx_ab](pic/1.jpg)
+
+__源码模式__
 ![nginx_ab](pic/2.jpg)
