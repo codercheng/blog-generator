@@ -1,0 +1,327 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link rel="stylesheet" type="text/css" href="css/global.css" />
+    <link rel="stylesheet" href="highlight/styles/rainbow.css">
+
+    <script src="script/jquery.js" type="text/javascript"></script>
+
+    <script src="highlight/highlight.pack.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</head>
+
+
+<script type="text/javascript">
+
+	var h1 = "<html><head><meta http-equiv=\"Content-Type\"content=\"text/html; charset=utf-8\"/><link rel=\"";
+	var h2 = "stylesheet\" type=\"text/css\" href=\"css/global.css\" /><link rel=\"stylesheet\" href=\"highlight/styles/rainbow.";
+	var h3 = "css\"><script src=\"script/jquery.js\" type=\"text/javascript\"></scr";
+	var h4 = "ipt><script src=\"highlight/highlight.pack.js";
+	var h5 = "\"></scrip";
+	var h6 = "t><scri";
+	var h7 = "pt>hljs.initHighlightingOnLoad();</"
+	var h8 = "script></head><body>";
+	var g_header  = h1+h2+h3+h4+h5+h6+h7+h8;
+
+	var g_body = "";
+	//var g_real_body = "";
+
+	var g_end = "</body></html>";
+
+	var last_p = "";
+	var last_content = "";
+
+	var last_hr = 0;
+	var src = 0;
+
+	$(document).ready(function(){
+
+		$("#mybtn1").click(addContent);
+		$("#mybtn2").click(clearDir);
+		$("#mybtn0").click(addQ);
+		$("#mybtn11").click(lastPara);
+
+		$("#mybtn10").click(function() {
+			$("#container").append("<hr>");
+			g_body = g_body.concat("<hr>");
+			last_hr = 1;
+		});
+
+		$("#btn4").click(function () {
+			//alert(g_header+g_body+g_end);
+			src = ~src;
+			$("#container").empty();
+			if (src) {
+				$("#container").text(g_header+g_body+g_end);
+			}
+			else {
+				$("#container").append(g_body);
+			}
+
+			
+		});
+
+		$(".myck").change(function() {
+			var show = 0;
+			var ckbox = document.getElementsByName("ck1");
+			var ckLength = ckbox.length;
+			for(var i = 0;i < ckLength;i++)
+			{
+				if(ckbox[i].checked)
+				{
+					show = 1;
+				}
+			}
+
+			if (!show) {
+				hideT();
+			}
+			else {
+				showT();
+			}
+			
+		});
+
+	});
+
+	function addContent() {
+
+		var text = $("#content").val();
+		if( jQuery.trim( text ) === '' ){
+			alert('empty content!');
+			return false;
+		}
+
+		$("#mybtn11").show();
+		last_p = "";
+		last_hr = 0;
+		var radiovalue1 = getRadioVal1();
+		var radiovalue2 = getRadioVal2();
+
+		text = text.replace(new RegExp("<","g"), "&lt;");
+		text = text.replace(new RegExp(">","g"), "&gt;");
+		
+		text = text.replace(new RegExp("&vlt;","g"), "<");
+		text = text.replace(new RegExp("&vgt;","g"), ">");
+				
+
+		addP(radiovalue1, radiovalue2, text);
+		last_content = text;
+		$("#container").append(last_p);
+
+		$('pre code').each(function(i, block) {
+		    hljs.highlightBlock(block);
+		  });
+
+		$("#content").val('');
+
+	}
+
+	function clearDir() {
+		$("#container").empty();
+	}
+
+	function lastPara() {
+
+		if (last_hr) {
+			g_body = g_body.substr(0, g_body.length-4);
+		}
+		else {
+			
+			$("#content").val(last_content);
+			g_body = g_body.substr(0, g_body.length-last_p.length);
+		
+		}
+
+		$("#container").empty();
+		$("#container").append(g_body);
+		$("#mybtn11").hide();
+	}
+
+	function addP(v1, v2, content) {
+
+		if (v2 == 2) {
+			content = "<center>"+content+"</center>";
+		}
+
+
+		if (v1 == 1) {
+			if (v2 == 3) {
+				last_p = "<p style=\"text-align:right;\">"+content+"</p>";
+			}
+			else 
+				last_p = "<p>"+content+"</p>";
+		}
+		else if (v1 == 2) {
+			if (v2 == 3) {
+				last_p = "<h1 style=\"text-align:right;\">"+content+"</h1>";
+			}
+			else 
+				last_p = "<h1>"+content+"</h1>";
+		
+		}
+		else if (v1 == 3) {
+			if (v2 == 3) {
+				last_p = "<h3 style=\"text-align:right;\">"+content+"</h3>";
+			}
+			else 
+				last_p = "<h3>"+content+"</h3>";
+		
+		}
+		else if (v1 == 4) {
+			if (v2 == 3) {
+				last_p = "<h5 style=\"text-align:right;\">"+content+"</h5>";
+			}
+			else 
+				last_p = "<h5>"+content+"</h5>";
+		
+		}
+		else if (v1 == 5) {
+			last_p = "<pre><code>"+content+"</pre></code>";
+		
+		}
+		else if (v1 == 6) {
+			last_p = "<blockquote><p>"+ content+ "</p></blockquote>";
+		
+		}
+
+
+		//last_p = last_p.concat("<pre><code>", content, "</pre></code>");
+
+		
+		console.log(last_p);
+		if (last_p != "")
+		g_body = g_body.concat(last_p);
+	}
+
+	function addQ() {
+		var text = $("#content2").val();
+		if( jQuery.trim( text ) === '' ){
+			alert('empty content!');
+			return false;
+		}
+
+		var ckbox = document.getElementsByName("ck1");
+		var ckLength = ckbox.length;
+		for(var i = 0;i < ckLength;i++)
+		{
+			if(ckbox[i].checked)
+			{
+			 	if (ckbox[i].value == 1) {
+			 		text = " &vlt;img src=\""+text+"\"/&vgt;";
+			 	}
+			 	else
+			 	if (ckbox[i].value == 2) {
+			 		text = " &vlt;a href=\""+text+"\"&vgt;[在此添加你的链接描述]&vlt;/a&vgt;";
+			 		
+			 	}
+			 	else
+			 	if (ckbox[i].value == 3) {
+			 		text = "&vlt;em&vgt;"+text+"&vlt;/em&vgt;";
+			 	}			 	
+			 	else
+			 	if (ckbox[i].value == 4) {
+			 		text = "&vlt;code&vgt;"+text+"&vlt;/code&vgt;";
+			 	}
+			 	else
+			 	if (ckbox[i].value == 5) {
+			 		text = "&vlt;del&vgt;"+text+"&vlt;/del&vgt;";
+			 	}
+			}
+		}
+		var text0 = $("#content").val();
+		$("#content").val(text0+text);
+
+		$("#content2").val('');
+
+
+	}
+
+	function getRadioVal1() {
+		var radio = document.getElementsByName("cl1");
+		var radioLength = radio.length;
+		for(var i = 0;i < radioLength;i++)
+		{
+			if(radio[i].checked)
+			{
+			 	return radio[i].value;
+			 	//var radioValue = radio[i].value;
+			 	//alert(radioValue);
+			}
+		}
+	}
+
+	function getRadioVal2() {
+		var radio = document.getElementsByName("cl2");
+		var radioLength = radio.length;
+		for(var i = 0;i < radioLength;i++)
+		{
+			if(radio[i].checked)
+			{
+			 	return radio[i].value;
+			}
+		}
+	}
+
+	function showT() {
+		$("#content2").show();
+		$("#mybtn0").show();
+	}
+	function hideT() {
+		$("#content2").hide();
+		$("#mybtn0").hide();
+	}
+   
+</script>
+
+<body>
+<h1 style="background:#FFEFD5"><center>在线博客生成系统</center></h1>
+
+<center>
+	<input type="radio"  name="cl1"  value="1" checked = "checked" /> 段落
+	<input type="radio"  name="cl1"  value="2" /> 标题1
+	<input type="radio"  name="cl1"  value="3" /> 标题2
+	<input type="radio"  name="cl1"  value="4" /> 标题3
+	<input type="radio"  name="cl1"  value="5" /> 代码
+	<input type="radio"  name="cl1"  value="6" /> 引用
+</center>
+	
+<center>
+	<input type="radio"  name="cl2" value="1" checked = "checked"/> 左
+	<input type="radio"  name="cl2" value="2" /> 中
+	<input type="radio"  name="cl2" value="3" /> 右
+
+</center>
+
+<center style="margin: 3px">
+	<input type="checkbox"  class="myck" name="ck1" value="1"/> 图片
+	<input type="checkbox"  class="myck" name="ck1" value="2"/> 链接
+	<input type="checkbox"  class="myck" name="ck1" value="3"/> <em>斜体</em>
+	<input type="checkbox"  class="myck" name="ck1" value="4"/> <code>着重</code>
+	<input type="checkbox"  class="myck" name="ck1" value="5"/> <del>横线</del>
+</center>
+
+<center style="margin: 3px">
+	<input type="text"  hidden="hidden" id="content2" size="30" placeholder="添加图片路径/着色字段/斜体内容!"/>
+	<BUTTON id="mybtn0" hidden="hidden">添加到段落</BUTTON>
+</center>
+
+<center>
+	<textarea id="content" rows="5" cols="50" placeholder="">
+	</textarea>
+</center>
+
+<center style="margin:3px">
+	<button id="mybtn1" style="color:#3CB371">添加上述内容</button><button id="mybtn10" style="color:#1E90FF">添加一分割线</button>
+	<button id="mybtn11" style="color:#FF7256">回退一次内容</button><button id="mybtn2" style="color:#CD0000">清空所有内容</button>
+</center>
+
+<h1 style="background:#FFEFD5"><center>实时效果预览</center></h1>
+<button id = "btn4" style="color: red;" >源码/预览模式切换</button>
+<div id="container">
+
+</div>
+     
+</body>
+</html>
