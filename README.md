@@ -3,7 +3,7 @@
 
 #demo
 * [@在线生成器](http://chengshuguang.com/blog/generator.html)
-* [@生成的页面](http://chengshuguang.com/blog/demo.html)
+* [@生成的页面](http://chengshuguang.com/blog/posts/container_of.html)
 
 
 #截图
