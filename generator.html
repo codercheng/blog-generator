@@ -53,12 +53,13 @@
 			src = ~src;
 			$("#container").empty();
 			if (src) {
-				$("#container").text(g_header+g_body+g_end);
+				var src_all = g_header+g_body+g_end;
+				$("#container").text(src_all);
 			}
 			else {
 				$("#container").append(g_body);
+				codeProcess();
 			}
-
 			
 		});
 
@@ -110,12 +111,16 @@
 		last_content = text;
 		$("#container").append(last_p);
 
-		$('pre code').each(function(i, block) {
-		    hljs.highlightBlock(block);
-		  });
+		codeProcess();
 
 		$("#content").val('');
 
+	}
+
+	function codeProcess() {
+		$('pre code').each(function(i, block) {
+		    hljs.highlightBlock(block);
+		  });
 	}
 
 	function clearDir() {
@@ -178,6 +183,11 @@
 		
 		}
 		else if (v1 == 5) {
+			//保留空格和换行啊
+			content = content.replace(new RegExp("\t\n","g"), "<br/>");
+			content = content.replace(new RegExp("\n","g"), "<br/>");
+			content = content.replace(new RegExp(" ","g"), "&nbsp;");
+			
 			last_p = "<pre><code>"+content+"</pre></code>";
 		
 		}
