@@ -47,6 +47,11 @@
 			g_body = g_body.concat("<hr>");
 			last_hr = 1;
 		});
+		$("#mybtn12").click(function() {
+			$("#container").append("<br>");
+			g_body = g_body.concat("<br>");
+			last_hr = 1;
+		});
 
 		$("#btn4").click(function () {
 			//alert(g_header+g_body+g_end);
@@ -324,8 +329,8 @@
 </center>
 
 <center style="margin:3px">
-	<button id="mybtn1" style="color:#3CB371">添加上述内容</button><button id="mybtn10" style="color:#1E90FF">添加一分割线</button>
-	<button id="mybtn11" style="color:#FF7256">回退一次内容</button><button id="mybtn2" style="color:#CD0000">清空所有内容</button>
+	<button id="mybtn1" style="color:#3CB371">加入正文</button><button id="mybtn10" style="color:#1E90FF">添加分割线</button><button id="mybtn12" style="color:#1E90FF">添加空行</button>
+	<button id="mybtn11" style="color:#FF7256">回退</button><button id="mybtn2" style="color:#CD0000">清空</button>
 </center>
 
 <h1 style="background:#FFEFD5"><center>实时效果预览</center></h1>
