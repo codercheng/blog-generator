@@ -29,11 +29,15 @@
 
 	var g_end = "</body></html>";
 
+	var src_github = "<a href=\"https://github.com/codercheng/\"><img style=\"position: absolute; top: 0; right: 0; border: 0;\" src=\"http://chengshuguang.com/pic_res/fork_me_on_github.png\" alt=\"Fork me on GitHub\" data-canonical-src=\"http://chengshuguang.com/pic_res/fork_me_on_github.png\"></a>";
+
 	var last_p = "";
 	var last_content = "";
 
 	var last_hr = 0;
 	var src = 0;
+	var github = 0;
+
 
 	$(document).ready(function(){
 
@@ -58,10 +62,20 @@
 			src = ~src;
 			$("#container").empty();
 			if (src) {
+				var ckbox = document.getElementsByName("ck2");
+				if (ckbox[0].checked) {
+					g_body = g_body+ src_github;
+					github = 1;
+				}
+
 				var src_all = g_header+g_body+g_end;
 				$("#container").text(src_all);
 			}
 			else {
+				if (github) {
+					g_body = g_body.substr(0, g_body.length-src_github.length);
+					github = 0;
+				}
 				$("#container").append(g_body);
 				codeProcess();
 			}
@@ -334,7 +348,13 @@
 </center>
 
 <h1 style="background:#FFEFD5"><center>实时效果预览</center></h1>
-<button id = "btn4" style="color: red;" >源码/预览模式切换</button>
+
+<div style="text-align:right;">
+<button id = "btn4" style="color: red;float:left" >源码/预览模式切换</button>
+
+<input type="checkbox"  checked = "checked" name="ck2" value="1" style="float: right;" /> GITHUB
+</div>
+
 <div id="container">
 
 </div>
