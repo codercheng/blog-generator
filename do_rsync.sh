@@ -1,1 +1,1 @@
-rsync -aSvH ./ root@qindao:~/sparrow/sparrow/website/blog/
+rsync -aSvH --exclude "do_rsync_*" ./ root@qindao:~/sparrow/sparrow/website/blog/

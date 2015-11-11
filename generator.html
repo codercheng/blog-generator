@@ -9,6 +9,18 @@
 
     <script src="highlight/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
+    <style type="text/css">
+    #content{
+		border:0;
+		background-color:transparent;
+		color: #0A0A0A;
+		font-size:15px;
+		padding: 10px; width:60%;  text-align: center;
+		outline:none;
+		line-height:1.5;
+		font-weight:bold;
+		}
+    </style>
 </head>
 
 
@@ -40,6 +52,31 @@
 
 
 	$(document).ready(function(){
+
+
+				//tab
+		  	    $("textarea").keydown(function(e) {
+				    if(e.keyCode === 9) { // tab was pressed
+				        // get caret position/selection
+				        var start = this.selectionStart;
+				        var end = this.selectionEnd;
+
+				        var $this = $(this);
+				        var value = $this.val();
+
+				        // set textarea value to: text before caret + tab + text after caret
+				        $this.val(value.substring(0, start)
+				                    + "\t"
+				                    + value.substring(end));
+
+				        // put caret at right position again (add one for the tab)
+				        this.selectionStart = this.selectionEnd = start + 1;
+
+				        // prevent the focus lose
+				        e.preventDefault();
+				    }
+
+				});
 
 		$("#mybtn1").click(addContent);
 		$("#mybtn2").click(clearDir);
@@ -338,8 +375,9 @@
 </center>
 
 <center>
-	<textarea id="content" rows="5" cols="50" placeholder="">
-	</textarea>
+	<!-- <textarea id="content" rows="5" cols="50" placeholder="">
+	</textarea> -->
+	<textarea autofocus id="content" rows="5" cols="50" placeholder="在此填入内容"></textarea>
 </center>
 
 <center style="margin:3px">
@@ -358,7 +396,6 @@
 <div id="container">
 
 </div>
-
 
 <a href="https://github.com/codercheng/blog-generator"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://chengshuguang.com/pic_res/fork_me_on_github.png" alt="Fork me on GitHub" data-canonical-src="http://chengshuguang.com/pic_res/fork_me_on_github.png"></a>
 
